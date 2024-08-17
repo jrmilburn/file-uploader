@@ -3,9 +3,31 @@
         <title>File Dookie</title>
     </head>
     <body>
+
+        <% if(user) { %>
+            <h3>Logged in as <%= user.username %></h3>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+
+                <label for="file">File Upload</label>
+                <input type="file" name="file" id="file">
+                <button type="submit">Upload</button>
+
+            </form>
+        <% } %>
         
-        <a href="/sign-up">Sign Up</a>
-        <a href="/log-in">Log In</a>
+
+        <% if(user){ %>
+
+            <div class="navigations">
+                <a href="/sign-up">Sign Up</a>
+                <a href="/log-in">Log In</a>
+            </div>
+
+        <% } else {%>
+            <div class="navigations">
+                <a href="/log-out">Log out</a>
+            </div>
+        <% } %>
 
     </body>
 </html>

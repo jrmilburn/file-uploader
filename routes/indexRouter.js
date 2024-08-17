@@ -1,8 +1,10 @@
 const { prisma, passport } = require("../config/passport"); 
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
+const multer = require("multer");
 
 const indexRouter = Router();
+const upload = multer();
 
 async function main() {
     const users = await prisma.user.findMany();
@@ -14,7 +16,9 @@ main()
 
 
 indexRouter.get("/", (req, res) => {
-    res.render("index");
+    res.render("index", {
+        user: req.user
+    });
 });
 
 indexRouter.get("/sign-up", (req, res) => {
@@ -39,7 +43,7 @@ indexRouter.post("/sign-up", async (req, res) => {
 
             if (existingUser) {
                 // Handle the case where the username is already taken
-                return res.status(400).send("Username already taken");
+                return res.redirect('/sign-up');
             }
 
             // Create a new user if the username is not taken
@@ -50,7 +54,7 @@ indexRouter.post("/sign-up", async (req, res) => {
                 },
             });
 
-            res.redirect("/");
+            res.redirect("/log-in");
 
         } catch (err) {
             console.error(err);
@@ -68,6 +72,34 @@ indexRouter.post("/log-in", passport.authenticate("local", {
     failureRedirect: "/log-in"
 }),async (req, res) => {
 
+})
+
+indexRouter.post("/upload", upload.single("file"), async (req, res) => {
+    try {
+        const file = req.file;
+
+        console.log(file);
+
+        if(!file) {
+            return res.status(400).send("No file uploaded");
+        }
+
+        const savedFile = await prisma.file.create({
+            data: {
+                name: file.originalname,
+                mimeType: file.mimetype,
+                data: file.buffer,
+            },
+        });
+
+        res.status(200).json({ message: "File uploaded successfully", fileId: savedFile.id });
+
+        const files = await prisma.file.findMany();
+        console.log(files);
+
+    } catch(err) {
+        res.status(500).send("Server error");
+    }
 })
 
 module.exports = indexRouter;

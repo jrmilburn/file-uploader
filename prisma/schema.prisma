@@ -27,3 +27,11 @@ model User {
   username String @unique
   password String
 }
+
+model File {
+  id       Int      @id @default(autoincrement())
+  name     String
+  mimeType String
+  data     Bytes
+  createAt DateTime @default(now())
+}
