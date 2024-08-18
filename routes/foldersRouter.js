@@ -135,6 +135,33 @@ foldersRouter.get("/:id/files/:fileid/download", async (req, res) => {
 
 })
 
+foldersRouter.get("/:id/edit", async (req, res) => {
+    res.render("edit-folder", {
+        folderId: req.params.id,
+    })
+});
+
+foldersRouter.post("/:id/edit", async(req, res) => {
+    try {
+
+        const folderId = req.params.id;
+
+        const file = await prisma.folder.update({
+            where: {
+                id: folderId,
+            },
+            data: {
+                name: req.body.name,
+            }
+        });
+
+        res.redirect(`/folders`);
+
+    } catch(err) {
+        console.error(err);
+    }
+});
+
 foldersRouter.use("/:id/upload", uploadRouter);
 
 
