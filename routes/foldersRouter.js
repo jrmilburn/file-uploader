@@ -109,8 +109,33 @@ foldersRouter.get("/:id/delete", async (req, res) => {
     }
 })
 
+foldersRouter.get("/:id/files/:fileid/download", async (req, res) => {
+
+    try {
+        const fileId = req.params.fileid;
+
+    const file = await prisma.file.findUnique({
+        where: { 
+            id: fileId,
+        }
+    });
+
+    if(!file) {
+        return res.status(404).send("File not found");
+    }
+
+    res.setHeader('Content-Disposition', `attachment; filename="${file.name}"`);
+    res.setHeader('Content-Type', file.mimeType);
+
+    res.send(file.data);
+} catch(err) {
+    console.error(err);
+}
+
+
+})
+
 foldersRouter.use("/:id/upload", uploadRouter);
 
-foldersRouter.use("/:id/files/", fileRouter);
 
 module.exports = foldersRouter;

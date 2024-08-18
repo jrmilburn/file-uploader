@@ -116,6 +116,27 @@
                 transform: translateY(125%);
 
             }
+
+            .text {
+
+                display: flex;
+                gap: 0.25rem;
+
+            }
+
+            .download {
+                position: absolute;
+                top: 20%;
+                transform: translateX(250%);
+
+                transition: scale 0.3s;
+            }
+
+            .download:hover {
+
+                scale: 1.1;
+
+            }
         </style>
     </head>
     <body>
@@ -137,9 +158,9 @@
                                 <a href="#">
                                     <img src="/assets/file.svg" height="80px" width="80px" alt="File Icon">
                                     <div>
-                                        <strong>Name:</strong> <%= file.name %><br>
-                                        <strong>Size:</strong> <%= (file.data.length / 1024).toFixed(2) %> KB<br> <!-- Assuming size is in bytes -->
-                                        <strong>Uploaded:</strong> <%= new Date(file.createdAt).toLocaleDateString() %><br>
+                                        <div class="text"><strong>Name:</strong> <%= file.name %><br></div>
+                                        <div class="text"><strong>Size:</strong> <%= (file.data.length / 1024).toFixed(2) %> KB<br></div> <!-- Assuming size is in bytes -->
+                                        <div class="download"><a href="/folders/<%= folder.id %>/files/<%= file.id %>/download" class="download-button"><img src="/assets/download.svg" height="24px" width="24px" alt=""></a></div>
                                     </div>
                                     <div class="delete">
                                         <a href="/folders/<%= folder.id %>/delete"><img src="/assets/delete.svg" height="24px" width="24px" alt="Delete"></a>
