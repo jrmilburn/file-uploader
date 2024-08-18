@@ -1,38 +1,37 @@
 <html>
     <head>
-        <title></title>
-    </head>
-    <style>
-        .logo {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            opacity: 0.8;
+        <title>Create a new folder</title>
+        <style>
+            .logo {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                left: 0;
+                opacity: 0.8;
 
-            transform: translate(10%, -10%);
-        }
+                transform: translate(10%, -10%);
+            }
 
-        .logo h2 {
-            font-size: 3rem;
-        }
+            .logo h2 {
+                font-size: 3rem;
+            }
 
-        body {
+            body {
                 height: 100vh;
                 overflow: hidden;
             }
 
-        .main {
+            .main {
                 width: 100%;
                 height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-        }
+            }
 
-        form {
+            form {
                 display: flex;
                 flex-direction: column;
                 position: relative;
@@ -46,18 +45,18 @@
                 box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
                 transform: translateY(-100%);
-        }
+            }
 
-        .input {
+            .input {
 
                 display: flex;
                 justify-content: space-around;
                 width: 50%;
                 margin: auto;
 
-        }
+            }
 
-        form button {
+            form button {
                 width: 40%;
                 margin: auto;
                 padding: 0.25rem 2rem;
@@ -66,26 +65,16 @@
 
                 transition: border 0.3s;
 
-        }
+            }
 
-        form button:hover {
+            form button:hover {
 
                 border: 1px solid rgba(0, 0, 0, 1);
                 cursor: pointer;
 
-        }
-
-        .redirect {
-
-            display: flex;
-            gap: 0.5rem;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-        }
-    </style>
+            }
+        </style>
+    </head>
     <body>
 
         <div class="logo">
@@ -94,17 +83,12 @@
         </div>
 
         <div class="main">
-            <form action="/sign-up" method="POST">
+            <form action="/folders/create" method="post">
                 <div class="input">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username">
+                    <label for="name">Folder name</label>
+                    <input type="text" name="name" id="name">
                 </div>
-                <div class="input">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password">
-                </div>
-                <button type="submit">Sign Up</button>
-                <div class="redirect">Already have an account?<a href="/log-in">Log In</a></div>
+                <button type="submit">Create</button>
             </form>
         </div>
     </body>

@@ -75,39 +75,17 @@
                 cursor: pointer;
 
             }
-
-            .redirect {
-
-                display: flex;
-                gap: 0.5rem;
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                transform: translate(-50%, -50%);
-
-            }
-
         </style>
     </head>
     <body>
         
-        <div class="logo">
-            <h2>File Dookie </h2>
-            <img src="/assets/icon.png" height="50px" width="50px" alt="">
-        </div>
-
         <div class="main">
-            <form action="/log-in" method="POST">
+            <form action="/folders/<%= folder.id %>/upload" method="post" enctype="multipart/form-data">
                 <div class="input">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username">
+                    <label for="file">File Upload</label>
+                    <input type="file" name="file" id="file">
                 </div>
-                <div class="input">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password">
-                </div>
-                <button type="submit">Log In</button>
-                <div class="redirect">Don't have an account?<a href="/sign-up">Sign Up</a></div>
+                <button type="submit">Upload</button>
             </form>
         </div>
 
