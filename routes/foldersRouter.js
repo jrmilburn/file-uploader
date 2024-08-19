@@ -232,7 +232,7 @@ foldersRouter.post("/:id/share", async (req, res) => {
         }
     });
 
-    const shareableLink = `http://localhost:3000/share/${sharedFolder.id}`;
+    const shareableLink = `https://file-dookie.adaptable.app/share/${sharedFolder.id}`;
 
     res.send(`Shareable link: <a href="${shareableLink}">${shareableLink}</a> (expires in ${duration})`);
 
