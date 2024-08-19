@@ -153,8 +153,9 @@
                 </div>
                 <div class="files">
                     <% if(files.length > 0){ %>
-                        <div class="file">
+                        
                             <% files.forEach((file) => { %>
+                                <div class="file">
                                 <a href="#">
                                     <img src="/assets/file.svg" height="80px" width="80px" alt="File Icon">
                                     <div>
@@ -163,11 +164,12 @@
                                         <div class="download"><a href="/folders/<%= folder.id %>/files/<%= file.id %>/download" class="download-button"><img src="/assets/download.svg" height="24px" width="24px" alt=""></a></div>
                                     </div>
                                     <div class="delete">
-                                        <a href="/folders/<%= folder.id %>/delete"><img src="/assets/delete.svg" height="24px" width="24px" alt="Delete"></a>
+                                        <a href="/folders/<%= folder.id %>/files/<%= file.id %>/delete"><img src="/assets/delete.svg" height="24px" width="24px" alt="Delete"></a>
                                     </div>
                                 </a>
+                            </div>
                             <% }) %>
-                        </div>
+                        
                     <% } else { %>
                         <h3>No files in this folder</h3>
                     <% } %>

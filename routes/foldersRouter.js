@@ -76,6 +76,8 @@ foldersRouter.get("/:id", async (req, res) => {
             }
         })
 
+        console.log(files);
+
         res.render("folder", {
             folder: folder,
             files: files,
@@ -131,9 +133,33 @@ foldersRouter.get("/:id/files/:fileid/download", async (req, res) => {
 } catch(err) {
     console.error(err);
 }
-
-
 })
+
+foldersRouter.get("/:id/files/:fileid/delete", async (req, res) => {
+
+    try {
+        console.log("hello");
+
+        const folderId = req.params.id;
+        const fileId = req.params.fileid;
+
+        const file = await prisma.file.delete({
+            where: {
+                id: fileId
+            }
+        });
+
+        if(!file) {
+            return res.status(404).send("File not found");
+        }
+
+        console.log(file);
+
+        res.redirect(`/folders/${folderId}`);
+    } catch(err) {
+        console.error(err);
+    }
+});
 
 foldersRouter.get("/:id/edit", async (req, res) => {
     res.render("edit-folder", {
