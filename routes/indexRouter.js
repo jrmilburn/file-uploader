@@ -7,6 +7,7 @@ const indexRouter = Router();
 const signUpRouter = require("./signUpRouter");
 const logInRouter = require("./logInRouter");
 const foldersRouter = require("./foldersRouter");
+const shareRouter = require("./shareRouter");
 
 async function main() {
     const users = await prisma.user.findMany();
@@ -32,9 +33,11 @@ indexRouter.get("/log-out", (req, res, next) => {
     });
 })
 
+
 indexRouter.use("/sign-up", signUpRouter);
 indexRouter.use("/log-in", logInRouter);
 indexRouter.use("/folders", foldersRouter);
+indexRouter.use("/share", shareRouter);
 
 
 module.exports = indexRouter;

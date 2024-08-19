@@ -188,6 +188,60 @@ foldersRouter.post("/:id/edit", async(req, res) => {
     }
 });
 
+foldersRouter.get("/:id/share", async (req, res) => {
+
+    const folderId = req.params.id;
+    const folder = await prisma.folder.findUnique({
+        where: {
+            id: folderId,
+        }
+    })
+
+    res.render("share-form", {
+        folder: folder
+    })
+
+})
+
+function parseDuration(duration) {
+
+    const amount = parseInt(duration.slice(0, -1));
+    const unit = duration.slice(-1);
+
+    switch(unit) {
+        case 'h': return amount * 60 * 60 * 1000;
+        case 'd': return amount * 24 * 60 * 60 * 1000;
+        default: throw new Error('Invalid duration unit');
+    }
+
+}
+
+foldersRouter.post("/:id/share", async (req, res) => {
+
+    try {
+
+        const folderId = req.params.id;
+        const duration = req.body.duration;
+
+        const expiresAt = new Date(Date.now() + parseDuration(duration));
+
+        const sharedFolder = await prisma.sharedFolder.create({
+        data: {
+            folderId: folderId,
+            expiresAt: expiresAt
+        }
+    });
+
+    const shareableLink = `http://localhost:3000/share/${sharedFolder.id}`;
+
+    res.send(`Shareable link: <a href="${shareableLink}">${shareableLink}</a> (expires in ${duration})`);
+
+    } catch(err) {
+        console.error(err);
+    }
+
+});
+
 foldersRouter.use("/:id/upload", uploadRouter);
 
 
